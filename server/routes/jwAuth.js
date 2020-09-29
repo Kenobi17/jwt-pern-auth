@@ -60,4 +60,15 @@ router.post("/login", middleware.isValidInfo, async (req, res) => {
   }
 });
 
+//VERIFY ROUTE
+
+router.get("/verify", middleware.isAuthorized, async (req, res) => {
+  try {
+    res.json(true);
+  } catch (error) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
