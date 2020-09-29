@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import userAPI from "../apis/userAPI";
 import { AuthenticationContext } from "../context/AuthenticationContext";
 
@@ -59,6 +60,7 @@ const Register = () => {
           Submit
         </button>
       </form>
+      <Link to="/register">Register</Link>
     </Fragment>
   );
 };
