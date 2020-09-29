@@ -10,7 +10,7 @@ const Register = () => {
     password: "",
   });
   const handleChange = (e) => {
-    const { value, name } = e.currentTarget;
+    const { value, name } = e.target;
     setInputsValues({ ...inputsValues, [name]: value });
   };
   const handleSubmit = async (e) => {
