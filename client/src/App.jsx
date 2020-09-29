@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Dashboard from "./routes/Dashboard";
@@ -8,22 +8,52 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { AuthenticationContextProvider } from "./context/AuthenticationContext";
+import { AuthenticationContext } from "./context/AuthenticationContext";
 
-function App() {
+const App = () => {
+  const { isAuthenticated } = useContext(AuthenticationContext);
+
   return (
-    <AuthenticationContextProvider>
-      <div className="App container">
-        <Router>
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/dashboard" component={Dashboard} />
-          </Switch>
-        </Router>
-      </div>
-    </AuthenticationContextProvider>
+    <div className="App container">
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/login"
+            render={(props) =>
+              !isAuthenticated ? (
+                <Login {...props} />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/register"
+            render={(props) =>
+              !isAuthenticated ? (
+                <Register {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            render={(props) =>
+              isAuthenticated ? (
+                <Dashboard {...props} />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
+        </Switch>
+      </Router>
+    </div>
   );
-}
+};
 
 export default App;
