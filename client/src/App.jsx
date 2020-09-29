@@ -8,18 +8,21 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import UserContextProvider from "./context/UserContext";
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/dashboard" component={Dashboard} />
-        </Switch>
-      </Router>
-    </div>
+    <UserContextProvider>
+      <div className="App">
+        <Router>
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/dashboard" component={Dashboard} />
+          </Switch>
+        </Router>
+      </div>
+    </UserContextProvider>
   );
 }
 
