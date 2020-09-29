@@ -6,7 +6,7 @@ const middleware = {
     try {
       const jwToken = req.header("token");
       if (!jwToken) {
-        return res.status("Please login first");
+        return res.status(403).json("Please login first");
       }
       const payload = jwt.verify(jwToken, process.env.jwtSecret);
       req.user = payload.user;
