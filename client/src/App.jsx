@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Dashboard from "./routes/Dashboard";
@@ -9,10 +9,28 @@ import {
   Redirect,
 } from "react-router-dom";
 import { AuthenticationContext } from "./context/AuthenticationContext";
+import userAPI from "./apis/userAPI";
 
 const App = () => {
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
 
+  const isAuth = async () => {
+    try {
+      const response = await userAPI.get("/auth/verify", {
+        headers: { token: localStorage.token },
+      });
+      response.data === true
+        ? setIsAuthenticated(true)
+        : setIsAuthenticated(false);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    isAuth();
+  });
   return (
     <div className="App container">
       <Router>
