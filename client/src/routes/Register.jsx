@@ -1,9 +1,64 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useContext } from "react";
+import userAPI from "../apis/userAPI";
+import { AuthenticationContext } from "../context/AuthenticationContext";
 
 const Register = () => {
+  const { setAuth } = useContext(AuthenticationContext);
+  const [inputsValues, setInputsValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { value, name } = e.currentTarget;
+    setInputsValues({ ...inputsValues, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await userAPI.post("/auth/register", {
+        name: inputsValues.name,
+        email: inputsValues.email,
+        password: inputsValues.password,
+      });
+      localStorage.setItem("token", response.data.token);
+      setAuth(true);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <Fragment>
-      <h1>Register</h1>
+      <h1 className="text-center my-5">Register</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          value={inputsValues.name}
+          type="text"
+          name="name"
+          placeholder="Name"
+          className="form-control my-3"
+        />
+        <input
+          onChange={handleChange}
+          value={inputsValues.email}
+          type="email"
+          name="email"
+          placeholder="Email"
+          className="form-control my-3"
+        />
+        <input
+          onChange={handleChange}
+          value={inputsValues.password}
+          type="password"
+          name="password"
+          placeholder="Password"
+          className="form-control my-3"
+        />
+        <button type="submit" className="btn btn-success btn-block">
+          Submit
+        </button>
+      </form>
     </Fragment>
   );
 };
