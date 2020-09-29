@@ -60,7 +60,7 @@ const Register = () => {
           Submit
         </button>
       </form>
-      <Link to="/register">Register</Link>
+      <Link to="/login">Login</Link>
     </Fragment>
   );
 };
