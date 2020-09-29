@@ -11,7 +11,8 @@ const middleware = {
       const payload = jwt.verify(jwToken, process.env.jwtSecret);
       req.user = payload.user;
     } catch (err) {
-      console.error(err.message);
+      //console.error(err); COMMENTED OUT BECAUSE EVERYTIME A USER LOADS THE PAGE
+      // WITHOUT LOGIN IN FIRST, THE CONSOLE PRINTS jwt malformed
       return res.status(403).json("You are not allowed to do that");
     }
 
