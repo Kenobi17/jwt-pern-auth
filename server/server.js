@@ -11,6 +11,9 @@ app.use(cors());
 
 //ROUTES
 
+//Register and login routes
+app.use("/auth", require("./routes/jwAuth"));
+
 app.listen(4000, () => {
   console.log("Server up at http://localhost:4000");
 });
