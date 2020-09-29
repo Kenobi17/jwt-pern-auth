@@ -8,7 +8,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import UserContextProvider from "./context/UserContext";
+import { UserContextProvider } from "./context/UserContext";
 
 function App() {
   return (
