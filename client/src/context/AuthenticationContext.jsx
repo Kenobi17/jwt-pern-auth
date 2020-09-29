@@ -1,13 +1,14 @@
 import React, { useState, createContext } from "react";
 
-export const UserContext = createContext();
+export const AuthenticationContext = createContext();
 
-export const UserContextProvider = (props) => {
+export const AuthenticationContextProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState({});
 
   return (
-    <UserContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthenticationContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated }}>
       {props.children}
-    </UserContext.Provider>
+    </AuthenticationContext.Provider>
   );
 };

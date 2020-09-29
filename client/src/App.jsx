@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Dashboard from "./routes/Dashboard";
@@ -8,11 +8,11 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { UserContextProvider } from "./context/AuthenticationContext";
+import { AuthenticationContextProvider } from "./context/AuthenticationContext";
 
 function App() {
   return (
-    <UserContextProvider>
+    <AuthenticationContextProvider>
       <div className="App container">
         <Router>
           <Switch>
@@ -22,7 +22,7 @@ function App() {
           </Switch>
         </Router>
       </div>
-    </UserContextProvider>
+    </AuthenticationContextProvider>
   );
 }
 
