@@ -3,20 +3,17 @@ const jwt = require("jsonwebtoken");
 
 const middleware = {
   isAuthorized: async (req, res, next) => {
+    const jwToken = req.header("token");
+    if (!jwToken) {
+      return res.status(403).json("Please login first");
+    }
     try {
-      const jwToken = req.header("token");
-      if (!jwToken) {
-        return res.status(403).json("Please login first");
-      }
       const payload = jwt.verify(jwToken, process.env.jwtSecret);
       req.user = payload.user;
+      next();
     } catch (err) {
-      //console.error(err); COMMENTED OUT BECAUSE EVERYTIME A USER LOADS THE PAGE
-      // WITHOUT LOGIN IN FIRST, THE CONSOLE PRINTS jwt malformed
-      return res.status(403).json("You are not allowed to do that");
+      return res.status(401).json("Token not valid");
     }
-
-    next();
   },
 
   isValidInfo: (req, res, next) => {
@@ -26,15 +23,15 @@ const middleware = {
     };
     if (req.path === "/register") {
       if (![email, name, password].every(Boolean)) {
-        return res.json("Missing Credentials");
+        return res.status(422).json("Missing Credentials");
       } else if (!validEmail(email)) {
-        return res.json("Invalid Email");
+        return res.status(422).json("Invalid Email");
       }
     } else if (req.path === "/login") {
       if (![email, password].every(Boolean)) {
-        return res.json("Missing Credentials");
+        return res.status(422).json("Missing Credentials");
       } else if (!validEmail(email)) {
-        return res.json("Invalid Email");
+        return res.status(422).json("Invalid Email");
       }
     }
 
