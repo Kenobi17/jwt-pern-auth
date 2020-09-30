@@ -10,6 +10,10 @@ import {
 } from "react-router-dom";
 import { AuthenticationContext } from "./context/AuthenticationContext";
 import userAPI from "./apis/userAPI";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
+toast.configure();
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(

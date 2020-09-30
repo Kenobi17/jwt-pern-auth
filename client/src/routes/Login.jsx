@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import userAPI from "../apis/userAPI";
 import { AuthenticationContext } from "../context/AuthenticationContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { setAuth } = useContext(AuthenticationContext);
@@ -20,10 +21,15 @@ const Login = () => {
         email: inputsValues.email,
         password: inputsValues.password,
       });
-      localStorage.setItem("token", response.data.token);
-      setAuth(true);
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        setAuth(true);
+        toast.success("Logged in Successfully");
+      } else {
+        setAuth(false);
+      }
     } catch (err) {
-      console.error(err.message);
+      toast.error(err.response.data);
     }
   };
   return (

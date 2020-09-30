@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import userAPI from "../apis/userAPI";
 import { AuthenticationContext } from "../context/AuthenticationContext";
 
@@ -22,10 +23,15 @@ const Register = () => {
         email: inputsValues.email,
         password: inputsValues.password,
       });
-      localStorage.setItem("token", response.data.token);
-      setAuth(true);
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        setAuth(true);
+        toast.success("Registered Succesfully");
+      } else {
+        setAuth(false);
+      }
     } catch (err) {
-      console.error(err.message);
+      toast.error(err.response.data);
     }
   };
   return (
