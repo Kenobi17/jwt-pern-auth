@@ -7,5 +7,3 @@ CREATE TABLE users(
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
-
-INSERT INTO users(name, email, password) VALUES ('Henry', '123@gmail.com', 'kth123456')
